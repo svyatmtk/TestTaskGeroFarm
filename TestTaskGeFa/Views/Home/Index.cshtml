@@ -1,0 +1,23 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Тестовое Задание</h1>
+    <p><script>
+            var button = document.createElement('button');
+            button.textContent = 'See Maket';
+
+            button.style.display = 'block';
+            button.style.margin = '0 auto';
+            button.style.fontSize = '20px';
+            button.style.padding = '10px 20px';
+
+            button.addEventListener('click', function () {
+                window.location.href = 'https://localhost:7154/Posts/Index';
+            });
+
+            document.body.appendChild(button);
+
+        </script></p>
+</div>

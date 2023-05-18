@@ -1,0 +1,32 @@
+﻿<head>
+    <title>Posts</title>
+    <link rel="stylesheet" href="~/css/styles.css" />
+    <style>
+        .workspace-container {
+            margin-top: 20px;
+        }
+    </style>
+    <script src="~/js/script.js"></script>
+</head>
+
+<body>
+
+<form method="get" action="/Posts">
+    <label for="start-id">Show titles starting from ID:</label>
+    <input type="number" id="start-id" name="startId" value="@ViewBag.StartId">
+    <label for="count">Number of titles to display:</label>
+    <input type="number" id="count" name="count" value="@ViewBag.Count">
+    <button type="submit">Show Table</button>
+</form>
+
+
+<div id="workspace-container" class="workspace-container">
+    <div id="workspace" class="workspace">
+    </div>
+</div>
+
+<script>
+        var titles = @Html.Raw(Json.Serialize(Model));
+        displayTitles(titles);
+    </script>
+</body>
