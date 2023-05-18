@@ -1,37 +1,33 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace TestTaskGeFa.Controllers
+namespace TestTaskGeFa.Controllers;
+
+public class PostsController : Controller
 {
-    public class PostsController : Controller
+    private readonly DBContext _context;
+
+    public PostsController(DBContext context)
     {
-        private readonly DBContext _context;
+        _context = context;
+    }
 
-        public PostsController(DBContext context)
+    public IActionResult Index(int? startId, int? count)
+    {
+        var query = _context.posts.AsQueryable();
+
+        if (startId.HasValue) query = query.Where(p => p.id >= startId.Value);
+
+        if (count.HasValue)
         {
-            _context = context;
+            query = query.OrderBy(p => p.id).Take(count.Value);
         }
 
-        public IActionResult Index(int? startId, int? count)
-        {
-            var query = _context.posts.AsQueryable();
+        var titles = query.OrderBy(p => p.id).Select(p => p.title).ToList();
 
-            if (startId.HasValue)
-            {
-                query = query.Where(p => p.id >= startId.Value);
-            }
+        ViewBag.StartId = startId;
+        ViewBag.Count = count;
 
-            if (count.HasValue)
-            {
-                query = query.Take(count.Value);
-            }
 
-            var titles = query.OrderBy(p => p.id).Select(p => p.title).ToList();
-
-            ViewBag.StartId = startId; 
-            ViewBag.Count = count; 
-
-            return View(titles);
-        }
-
+        return View(titles);
     }
 }
